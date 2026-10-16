@@ -2,8 +2,6 @@ O MovieLoc é um sistema de locação de filmes desenvolvido com o objetivo de r
 
 O sistema foi desenvolvido para organizar e gerenciar informações relacionadas a filmes, clientes e locações.
 
-Diagrama UML
-
 ### Diagrama UML
 
 ![Diagrama UML do Sistema MovieLoc](Diagrama%20UML%20do%20Sistema%20MovieLoc.png)
