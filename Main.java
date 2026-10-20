@@ -86,7 +86,7 @@ public class Main {
 	    }
 
 	    private static void mostrarMenu() {
-	        System.out.println("\n=========== MOVIELOC ===========");
+	        System.out.println("= MOVIELOC =");
 	        System.out.println("--- CLIENTES ---");
 	        System.out.println("1  - Cadastrar cliente");
 	        System.out.println("2  - Listar clientes");
