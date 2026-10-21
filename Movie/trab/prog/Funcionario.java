@@ -1,36 +1,49 @@
 package trab.prog;
 
-	public class Funcionario extends Pessoa {
+public class Funcionario extends Pessoa {
+    private String matricula;
+    private String cargo;
 
+    public Funcionario(String nome, String telefone,
+            String matricula, String cargo) {
+        super(nome, telefone);
+        setMatricula(matricula);
+        setCargo(cargo);
+    }
 
-	    private String cargo;
+    public String getMatricula() {
+        return matricula;
+    }
 
+    public void setMatricula(String matricula) {
+        if (matricula == null || matricula.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "A matrícula não pode ficar vazia.");
+        }
+        this.matricula = matricula.trim();
+    }
 
-	    public Funcionario(String nome, String telefone, String cargo) {
-	        super(nome, telefone);
-	        this.cargo = cargo;
-	    }
+    public String getCargo() {
+        return cargo;
+    }
 
+    public void setCargo(String cargo) {
+        if (cargo == null || cargo.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "O cargo não pode ficar vazio.");
+        }
+        this.cargo = cargo.trim();
+    }
 
-	    public String getCargo() {
-	        return cargo;
-	    }
+    @Override
+    public String getTipo() {
+        return "Funcionário";
+    }
 
-
-	    public void setCargo(String cargo) {
-	        this.cargo = cargo;
-	    }
-
-
-	    @Override
-	    public String getTipo() {
-	        return "Funcionario";
-	    }
-
-
-	    @Override
-	    public String toString() {
-	        return super.toString() + " | Cargo: " + cargo;
-	    }
-	}
-
+    @Override
+    public String toString() {
+        return dadosBasicos()
+                + " | Matrícula: " + matricula
+                + " | Cargo: " + cargo;
+    }
+}

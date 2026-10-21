@@ -1,316 +1,576 @@
 package trab.prog;
+
 import java.util.Scanner;
+
 public class Main {
 
+    private static final Scanner entrada = new Scanner(System.in);
 
-	    private static Scanner entrada = new Scanner(System.in);
-	    private static Locadora locadora = new Locadora();
+    public static void main(String[] args) {
 
-	    public static void main(String[] args) {
-	        int opcao;
+        Locadora locadora = new Locadora("MovieLoc", "Videira - SC");
+        int opcao;
 
-	        do {
-	            mostrarMenu();
-	            opcao = lerInteiro("Escolha: ");
+        do {
+            mostrarMenu(locadora);
+            opcao = lerInteiro("Escolha uma opção: ");
 
-	            switch (opcao) {
-	                case 1:
-	                    cadastrarCliente();
-	                    break;
-	                case 2:
-	                    locadora.listarClientes();
-	                    break;
-	                case 3:
-	                    buscarCliente();
-	                    break;
-	                case 4:
-	                    atualizarCliente();
-	                    break;
-	                case 5:
-	                    removerCliente();
-	                    break;
-	                case 6:
-	                    cadastrarFuncionario();
-	                    break;
-	                case 7:
-	                    locadora.listarFuncionarios();
-	                    break;
-	                case 8:
-	                    atualizarFuncionario();
-	                    break;
-	                case 9:
-	                    removerFuncionario();
-	                    break;
-	                case 10:
-	                    locadora.listarPessoas();
-	                    break;
-	                case 11:
-	                    cadastrarFilme();
-	                    break;
-	                case 12:
-	                    locadora.listarFilmes();
-	                    break;
-	                case 13:
-	                    buscarFilme();
-	                    break;
-	                case 14:
-	                    atualizarFilme();
-	                    break;
-	                case 15:
-	                    removerFilme();
-	                    break;
-	                case 16:
-	                    alugarFilme();
-	                    break;
-	                case 17:
-	                    devolverFilme();
-	                    break;
-	                case 18:
-	                    locadora.listarLocacoes();
-	                    break;
-	                case 19:
-	                    buscarLocacao();
-	                    break;
-	                case 20:
-	                    removerLocacao();
-	                    break;
-	                case 0:
-	                    System.out.println("Saindo do sistema...");
-	                    break;
-	                default:
-	                    System.out.println("Opcao invalida!");
-	            }
-	        } while (opcao != 0);
+            switch (opcao) {
+                case 1:
+                    cadastrarCliente(locadora);
+                    break;
 
-	        entrada.close();
-	    }
+                case 2:
+                    locadora.listarClientes();
+                    break;
 
-	    private static void mostrarMenu() {
-	        System.out.println("= MOVIELOC =");
-	        System.out.println("--- CLIENTES ---");
-	        System.out.println("1  - Cadastrar cliente");
-	        System.out.println("2  - Listar clientes");
-	        System.out.println("3  - Buscar cliente por CPF");
-	        System.out.println("4  - Atualizar cliente");
-	        System.out.println("5  - Remover cliente");
-	        System.out.println("--- FUNCIONARIOS ---");
-	        System.out.println("6  - Cadastrar funcionario");
-	        System.out.println("7  - Listar funcionarios");
-	        System.out.println("8  - Atualizar funcionario");
-	        System.out.println("9  - Remover funcionario");
-	        System.out.println("10 - Listar todas as pessoas (polimorfismo)");
-	        System.out.println("--- FILMES ---");
-	        System.out.println("11 - Cadastrar filme");
-	        System.out.println("12 - Listar filmes");
-	        System.out.println("13 - Buscar filme por titulo");
-	        System.out.println("14 - Atualizar filme");
-	        System.out.println("15 - Remover filme");
-	        System.out.println("--- LOCACOES ---");
-	        System.out.println("16 - Alugar filme");
-	        System.out.println("17 - Devolver filme");
-	        System.out.println("18 - Listar locacoes");
-	        System.out.println("19 - Buscar locacao por codigo");
-	        System.out.println("20 - Remover locacao");
-	        System.out.println("0  - Sair");
-	    }
+                case 3:
+                    buscarCliente(locadora);
+                    break;
 
-	    // ================= CLIENTES =================
+                case 4:
+                    atualizarCliente(locadora);
+                    break;
 
-	    private static void cadastrarCliente() {
-	        String nome = lerTexto("Nome: ");
-	        String telefone = lerTexto("Telefone: ");
-	        String cpf = lerTexto("CPF: ");
+                case 5:
+                    removerCliente(locadora);
+                    break;
 
-	        Cliente cliente = new Cliente(nome, telefone, cpf);
+                case 6:
+                    cadastrarFilme(locadora);
+                    break;
 
-	        if (locadora.cadastrarCliente(cliente)) {
-	            System.out.println("Cliente cadastrado com sucesso!");
-	        } else {
-	            System.out.println("Ja existe um cliente com esse CPF.");
-	        }
-	    }
+                case 7:
+                    locadora.listarFilmes();
+                    break;
 
-	    private static void buscarCliente() {
-	        String cpf = lerTexto("CPF do cliente: ");
-	        Cliente cliente = locadora.buscarCliente(cpf);
+                case 8:
+                    buscarFilme(locadora);
+                    break;
 
-	        if (cliente == null) {
-	            System.out.println("Cliente nao encontrado.");
-	        } else {
-	            System.out.println(cliente);
-	        }
-	    }
+                case 9:
+                    atualizarFilme(locadora);
+                    break;
 
-	    private static void atualizarCliente() {
-	        String cpf = lerTexto("CPF do cliente: ");
+                case 10:
+                    removerFilme(locadora);
+                    break;
 
-	        if (locadora.buscarCliente(cpf) == null) {
-	            System.out.println("Cliente nao encontrado.");
-	            return;
-	        }
+                case 11:
+                    realizarLocacao(locadora);
+                    break;
 
-	        String nome = lerTexto("Novo nome: ");
-	        String telefone = lerTexto("Novo telefone: ");
+                case 12:
+                    devolverFilme(locadora);
+                    break;
 
-	        locadora.atualizarCliente(cpf, nome, telefone);
-	        System.out.println("Cliente atualizado com sucesso!");
-	    }
+                case 13:
+                    locadora.listarLocacoes();
+                    break;
 
-	    private static void removerCliente() {
-	        String cpf = lerTexto("CPF do cliente: ");
+                case 14:
+                    buscarLocacao(locadora);
+                    break;
 
-	        if (locadora.removerCliente(cpf)) {
-	            System.out.println("Cliente removido com sucesso!");
-	        } else {
-	            System.out.println("Cliente nao encontrado ou possui locacao em aberto.");
-	        }
-	    }
+                case 15:
+                    atualizarLocacao(locadora);
+                    break;
 
-	    // ================= FUNCIONARIOS =================
+                case 16:
+                    removerLocacao(locadora);
+                    break;
 
-	    private static void cadastrarFuncionario() {
-	        String nome = lerTexto("Nome: ");
-	        String telefone = lerTexto("Telefone: ");
-	        String cargo = lerTexto("Cargo: ");
+                case 17:
+                    cadastrarFuncionario(locadora);
+                    break;
 
-	        locadora.cadastrarFuncionario(new Funcionario(nome, telefone, cargo));
-	        System.out.println("Funcionario cadastrado com sucesso!");
-	    }
+                case 18:
+                    locadora.listarFuncionarios();
+                    break;
 
-	    private static void atualizarFuncionario() {
-	        String nome = lerTexto("Nome do funcionario: ");
+                case 19:
+                    atualizarFuncionario(locadora);
+                    break;
 
-	        if (locadora.buscarFuncionario(nome) == null) {
-	            System.out.println("Funcionario nao encontrado.");
-	            return;
-	        }
+                case 20:
+                    removerFuncionario(locadora);
+                    break;
 
-	        String telefone = lerTexto("Novo telefone: ");
-	        String cargo = lerTexto("Novo cargo: ");
+                case 21:
+                    locadora.listarTodasAsPessoas();
+                    break;
 
-	        locadora.atualizarFuncionario(nome, telefone, cargo);
-	        System.out.println("Funcionario atualizado com sucesso!");
-	    }
+                case 0:
+                    System.out.println(
+                            "Saindo do MovieLoc. Até mais!");
+                    break;
 
-	    private static void removerFuncionario() {
-	        String nome = lerTexto("Nome do funcionario: ");
+                default:
+                    System.out.println(
+                            "Opção inválida. Escolha uma opção que aparece no menu.");
+            }
 
-	        if (locadora.removerFuncionario(nome)) {
-	            System.out.println("Funcionario removido com sucesso!");
-	        } else {
-	            System.out.println("Funcionario nao encontrado.");
-	        }
-	    }
+            if (opcao != 0) {
+                System.out.println();
+            }
 
-	    // ================= FILMES =================
+        } while (opcao != 0);
 
-	    private static void cadastrarFilme() {
-	        String titulo = lerTexto("Titulo: ");
-	        String genero = lerTexto("Genero: ");
-	        int ano = lerInteiro("Ano: ");
+        entrada.close();
+    }
 
-	        if (locadora.cadastrarFilme(new Filme(titulo, genero, ano))) {
-	            System.out.println("Filme cadastrado com sucesso!");
-	        } else {
-	            System.out.println("Ja existe um filme com esse titulo.");
-	        }
-	    }
+    private static void mostrarMenu(Locadora locadora) {
+        System.out.println(
+                "\n========== " + locadora.getNome().toUpperCase()
+                        + " ==========");
+        System.out.println("Endereço: " + locadora.getEndereco());
 
-	    private static void buscarFilme() {
-	        String titulo = lerTexto("Titulo do filme: ");
-	        Filme filme = locadora.buscarFilme(titulo);
+        System.out.println("--- CLIENTES ---");
+        System.out.println("1 - Cadastrar cliente");
+        System.out.println("2 - Listar clientes");
+        System.out.println("3 - Buscar cliente por CPF");
+        System.out.println("4 - Atualizar telefone/e-mail do cliente");
+        System.out.println("5 - Remover cliente");
 
-	        if (filme == null) {
-	            System.out.println("Filme nao encontrado.");
-	        } else {
-	            System.out.println(filme);
-	        }
-	    }
+        System.out.println("--- FILMES ---");
+        System.out.println("6 - Cadastrar filme");
+        System.out.println("7 - Listar filmes");
+        System.out.println("8 - Buscar filme por título");
+        System.out.println("9 - Atualizar filme");
+        System.out.println("10 - Remover filme");
 
-	    private static void atualizarFilme() {
-	        String titulo = lerTexto("Titulo do filme: ");
+        System.out.println("--- LOCAÇÕES ---");
+        System.out.println("11 - Realizar locação");
+        System.out.println("12 - Devolver filme");
+        System.out.println("13 - Listar locações");
+        System.out.println("14 - Buscar locação por código");
+        System.out.println("15 - Atualizar valor da locação");
+        System.out.println("16 - Remover locação");
 
-	        if (locadora.buscarFilme(titulo) == null) {
-	            System.out.println("Filme nao encontrado.");
-	            return;
-	        }
+        System.out.println("--- FUNCIONÁRIOS / POO ---");
+        System.out.println("17 - Cadastrar funcionário");
+        System.out.println("18 - Listar funcionários");
+        System.out.println("19 - Atualizar funcionário");
+        System.out.println("20 - Remover funcionário");
+        System.out.println(
+                "21 - Listar clientes e funcionários (polimorfismo)");
 
-	        String genero = lerTexto("Novo genero: ");
-	        int ano = lerInteiro("Novo ano: ");
+        System.out.println("0 - Sair");
+    }
 
-	        locadora.atualizarFilme(titulo, genero, ano);
-	        System.out.println("Filme atualizado com sucesso!");
-	    }
+    private static void cadastrarCliente(Locadora locadora) {
+        System.out.println("\n--- CADASTRAR CLIENTE ---");
 
-	    private static void removerFilme() {
-	        String titulo = lerTexto("Titulo do filme: ");
+        String nome = lerTexto("Nome: ");
+        String cpf = lerCPF();
+        String telefone = lerTelefone();
+        String email = lerEmail();
 
-	        if (locadora.removerFilme(titulo)) {
-	            System.out.println("Filme removido com sucesso!");
-	        } else {
-	            System.out.println("Filme nao encontrado ou esta alugado.");
-	        }
-	    }
+        try {
+            Cliente cliente = new Cliente(
+                    nome, cpf, telefone, email);
 
-	    // ================= LOCACOES =================
+            if (locadora.cadastrarCliente(cliente)) {
+                System.out.println(
+                        "Cliente cadastrado com sucesso!");
+            } else {
+                System.out.println(
+                        "Já existe um cliente cadastrado com esse CPF.");
+            }
 
-	    private static void alugarFilme() {
-	        String cpf = lerTexto("CPF do cliente: ");
-	        String titulo = lerTexto("Titulo do filme: ");
+        } catch (IllegalArgumentException erro) {
+            System.out.println(
+                    "Não foi possível cadastrar: " + erro.getMessage());
+        }
+    }
 
-	        System.out.println(locadora.realizarLocacao(cpf, titulo));
-	    }
+    private static void buscarCliente(Locadora locadora) {
+        Cliente cliente = locadora.buscarClientePorCpf(lerCPF());
 
-	    private static void devolverFilme() {
-	        String titulo = lerTexto("Titulo do filme: ");
+        if (cliente == null) {
+            System.out.println("Cliente não encontrado.");
+        } else {
+            System.out.println(cliente);
+        }
+    }
 
-	        System.out.println(locadora.devolverFilme(titulo));
-	    }
+    private static void atualizarCliente(Locadora locadora) {
+        System.out.println("\n--- ATUALIZAR CLIENTE ---");
 
-	    private static void buscarLocacao() {
-	        int codigo = lerInteiro("Codigo da locacao: ");
-	        Locacao locacao = locadora.buscarLocacao(codigo);
+        String cpf = lerCPF();
 
-	        if (locacao == null) {
-	            System.out.println("Locacao nao encontrada.");
-	        } else {
-	            System.out.println(locacao);
-	        }
-	    }
+        if (locadora.buscarClientePorCpf(cpf) == null) {
+            System.out.println("Cliente não encontrado.");
+            return;
+        }
 
-	    private static void removerLocacao() {
-	        int codigo = lerInteiro("Codigo da locacao: ");
+        String telefone = lerTelefone();
+        String email = lerEmail();
 
-	        if (locadora.removerLocacao(codigo)) {
-	            System.out.println("Locacao removida com sucesso!");
-	        } else {
-	            System.out.println("Locacao nao encontrada.");
-	        }
-	    }
+        try {
+            locadora.atualizarCliente(cpf, telefone, email);
+            System.out.println(
+                    "Cliente atualizado com sucesso!");
 
-	    // ================= LEITURA =================
+        } catch (IllegalArgumentException erro) {
+            System.out.println(
+                    "Não foi possível atualizar: " + erro.getMessage());
+        }
+    }
 
-	    private static String lerTexto(String mensagem) {
-	        String texto;
-	        do {
-	            System.out.print(mensagem);
-	            texto = entrada.nextLine().trim();
-	            if (texto.isEmpty()) {
-	                System.out.println("Campo nao pode ficar vazio.");
-	            }
-	        } while (texto.isEmpty());
-	        return texto;
-	    }
+    private static void removerCliente(Locadora locadora) {
+        String cpf = lerCPF();
 
-	    private static int lerInteiro(String mensagem) {
-	        while (true) {
-	            System.out.print(mensagem);
-	            try {
-	                return Integer.parseInt(entrada.nextLine().trim());
-	            } catch (NumberFormatException e) {
-	                System.out.println("Digite um numero inteiro valido.");
-	            }
-	        }
-	    }
-	}
+        if (locadora.removerCliente(cpf)) {
+            System.out.println("Cliente removido com sucesso!");
+        } else {
+            System.out.println(
+                    "Cliente não encontrado ou possui uma locação em aberto.");
+        }
+    }
+
+    private static void cadastrarFilme(Locadora locadora) {
+        System.out.println("\n--- CADASTRAR FILME ---");
+
+        String titulo = lerTexto("Título: ");
+        String genero = lerTexto("Gênero: ");
+
+        int ano = lerInteiro("Ano (1888 a 2100): ");
+
+        while (ano < 1888 || ano > 2100) {
+            System.out.println("Ano inválido.");
+            ano = lerInteiro("Informe um ano entre 1888 e 2100: ");
+        }
+
+        String duracao = lerTexto("Duração (ex.: 120 minutos): ");
+
+        try {
+            Filme filme = new Filme(
+                    titulo, genero, ano, duracao);
+
+            if (locadora.cadastrarFilme(filme)) {
+                System.out.println(
+                        "Filme cadastrado com sucesso!");
+            } else {
+                System.out.println(
+                        "Já existe um filme com esse título.");
+            }
+
+        } catch (IllegalArgumentException erro) {
+            System.out.println(
+                    "Não foi possível cadastrar: " + erro.getMessage());
+        }
+    }
+
+    private static void buscarFilme(Locadora locadora) {
+        Filme filme = locadora.buscarFilmePorTitulo(
+                lerTexto("Título do filme: "));
+
+        if (filme == null) {
+            System.out.println("Filme não encontrado.");
+        } else {
+            System.out.println(filme);
+        }
+    }
+
+    private static void atualizarFilme(Locadora locadora) {
+        System.out.println("\n--- ATUALIZAR FILME ---");
+
+        String titulo = lerTexto(
+                "Título do filme que deseja atualizar: ");
+
+        if (locadora.buscarFilmePorTitulo(titulo) == null) {
+            System.out.println("Filme não encontrado.");
+            return;
+        }
+
+        String genero = lerTexto("Novo gênero: ");
+        int ano = lerInteiro("Novo ano (1888 a 2100): ");
+
+        while (ano < 1888 || ano > 2100) {
+            System.out.println("Ano inválido.");
+            ano = lerInteiro("Informe um ano entre 1888 e 2100: ");
+        }
+
+        String duracao = lerTexto("Nova duração: ");
+
+        try {
+            locadora.atualizarFilme(
+                    titulo, genero, ano, duracao);
+
+            System.out.println(
+                    "Filme atualizado com sucesso!");
+
+        } catch (IllegalArgumentException erro) {
+            System.out.println(
+                    "Não foi possível atualizar: " + erro.getMessage());
+        }
+    }
+
+    private static void removerFilme(Locadora locadora) {
+        String titulo = lerTexto(
+                "Título do filme que deseja remover: ");
+
+        if (locadora.removerFilme(titulo)) {
+            System.out.println("Filme removido com sucesso!");
+        } else {
+            System.out.println(
+                    "Filme não encontrado ou está alugado.");
+        }
+    }
+
+    private static void realizarLocacao(Locadora locadora) {
+        System.out.println("\n--- REALIZAR LOCAÇÃO ---");
+
+        String cpf = lerCPF();
+        String titulo = lerTexto("Título do filme: ");
+        String data = lerData(
+                "Data da locação (DD/MM/AAAA): ");
+        double valor = lerDoublePositivo(
+                "Valor da locação (R$): ");
+
+        System.out.println(
+                locadora.realizarLocacao(cpf, titulo, data, valor));
+    }
+
+    private static void devolverFilme(Locadora locadora) {
+        System.out.println("\n--- DEVOLVER FILME ---");
+
+        String titulo = lerTexto("Título do filme: ");
+        String data = lerData(
+                "Data da devolução (DD/MM/AAAA): ");
+
+        System.out.println(
+                locadora.devolverFilme(titulo, data));
+    }
+
+    private static void buscarLocacao(Locadora locadora) {
+        int codigo = lerInteiro("Código da locação: ");
+
+        Locacao locacao = locadora.buscarLocacaoPorCodigo(codigo);
+
+        if (locacao == null) {
+            System.out.println("Locação não encontrada.");
+        } else {
+            System.out.println(locacao);
+        }
+    }
+
+    private static void atualizarLocacao(Locadora locadora) {
+        int codigo = lerInteiro(
+                "Código da locação que deseja atualizar: ");
+
+        if (locadora.buscarLocacaoPorCodigo(codigo) == null) {
+            System.out.println("Locação não encontrada.");
+            return;
+        }
+
+        double valor = lerDoublePositivo("Novo valor (R$): ");
+
+        if (locadora.atualizarValorLocacao(codigo, valor)) {
+            System.out.println(
+                    "Valor da locação atualizado com sucesso!");
+        } else {
+            System.out.println(
+                    "Não foi possível atualizar a locação.");
+        }
+    }
+
+    private static void removerLocacao(Locadora locadora) {
+        int codigo = lerInteiro(
+                "Código da locação que deseja remover: ");
+
+        if (locadora.removerLocacao(codigo)) {
+            System.out.println("Locação removida com sucesso!");
+        } else {
+            System.out.println("Locação não encontrada.");
+        }
+    }
+
+    private static void cadastrarFuncionario(Locadora locadora) {
+        System.out.println("\n--- CADASTRAR FUNCIONÁRIO ---");
+
+        String nome = lerTexto("Nome: ");
+        String telefone = lerTelefone();
+        String matricula = lerTexto("Matrícula: ");
+        String cargo = lerTexto("Cargo: ");
+
+        try {
+            Funcionario funcionario = new Funcionario(
+                    nome, telefone, matricula, cargo);
+
+            if (locadora.cadastrarFuncionario(funcionario)) {
+                System.out.println(
+                        "Funcionário cadastrado com sucesso!");
+            } else {
+                System.out.println(
+                        "Já existe um funcionário com essa matrícula.");
+            }
+
+        } catch (IllegalArgumentException erro) {
+            System.out.println(
+                    "Não foi possível cadastrar: " + erro.getMessage());
+        }
+    }
+
+    private static void atualizarFuncionario(Locadora locadora) {
+        String matricula = lerTexto(
+                "Matrícula do funcionário: ");
+
+        if (locadora.buscarFuncionarioPorMatricula(matricula) == null) {
+            System.out.println("Funcionário não encontrado.");
+            return;
+        }
+
+        String telefone = lerTelefone();
+        String cargo = lerTexto("Novo cargo: ");
+
+        try {
+            locadora.atualizarFuncionario(
+                    matricula, telefone, cargo);
+
+            System.out.println(
+                    "Funcionário atualizado com sucesso!");
+
+        } catch (IllegalArgumentException erro) {
+            System.out.println(
+                    "Não foi possível atualizar: " + erro.getMessage());
+        }
+    }
+
+    private static void removerFuncionario(Locadora locadora) {
+        String matricula = lerTexto(
+                "Matrícula do funcionário que deseja remover: ");
+
+        if (locadora.removerFuncionario(matricula)) {
+            System.out.println(
+                    "Funcionário removido com sucesso!");
+        } else {
+            System.out.println("Funcionário não encontrado.");
+        }
+    }
+
+    private static String lerTexto(String mensagem) {
+        String texto;
+
+        do {
+            System.out.print(mensagem);
+            texto = entrada.nextLine().trim();
+
+            if (texto.isEmpty()) {
+                System.out.println(
+                        "Este campo não pode ficar vazio. Tente novamente.");
+            }
+
+        } while (texto.isEmpty());
+
+        return texto;
+    }
+
+    private static String lerCPF() {
+        String cpf;
+
+        do {
+            System.out.print("CPF (com ou sem pontuação): ");
+            cpf = entrada.nextLine().trim();
+
+            if (!Validadores.validarCPF(cpf)) {
+                System.out.println(
+                        "CPF inválido. Digite um CPF com 11 números e dígitos verificadores corretos.");
+            }
+
+        } while (!Validadores.validarCPF(cpf));
+
+        return Validadores.somenteNumeros(cpf);
+    }
+
+    private static String lerEmail() {
+        String email;
+
+        do {
+            System.out.print("E-mail: ");
+            email = entrada.nextLine().trim();
+
+            if (!Validadores.validarEmail(email)) {
+                System.out.println(
+                        "E-mail inválido. Exemplo: nome@gmail.com ou nome@hotmail.com. Digite novamente.");
+            }
+
+        } while (!Validadores.validarEmail(email));
+
+        return email;
+    }
+
+    private static String lerTelefone() {
+        String telefone;
+
+        do {
+            System.out.print("Telefone com DDD: ");
+            telefone = entrada.nextLine().trim();
+
+            if (!Validadores.validarTelefone(telefone)) {
+                System.out.println(
+                        "Telefone inválido. Informe 10 dígitos (fixo) ou 11 (celular), contando o DDD.");
+            }
+
+        } while (!Validadores.validarTelefone(telefone));
+
+        return Validadores.somenteNumeros(telefone);
+    }
+
+    private static String lerData(String mensagem) {
+        String data;
+
+        do {
+            System.out.print(mensagem);
+            data = entrada.nextLine().trim();
+
+            if (!Validadores.validarData(data)) {
+                System.out.println(
+                        "Data inválida. Use uma data real no formato DD/MM/AAAA.");
+            }
+
+        } while (!Validadores.validarData(data));
+
+        return data;
+    }
+
+    private static int lerInteiro(String mensagem) {
+        while (true) {
+            System.out.print(mensagem);
+            String texto = entrada.nextLine().trim();
+
+            try {
+                return Integer.parseInt(texto);
+            } catch (NumberFormatException erro) {
+                System.out.println(
+                        "Digite um número inteiro válido.");
+            }
+        }
+    }
+
+    private static double lerDoublePositivo(String mensagem) {
+        while (true) {
+            System.out.print(mensagem);
+
+            String texto = entrada.nextLine()
+                    .trim()
+                    .replace(',', '.');
+
+            try {
+                double valor = Double.parseDouble(texto);
+
+                if (Double.isFinite(valor) && valor > 0) {
+                    return valor;
+                }
+
+                System.out.println(
+                        "O valor deve ser maior que zero.");
+
+            } catch (NumberFormatException erro) {
+                System.out.println(
+                        "Digite um valor numérico, por exemplo 12,50.");
+            }
+        }
+    }
 }

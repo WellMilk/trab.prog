@@ -1,13 +1,13 @@
 package trab.prog;
 
-public abstract class Pessoa {
 
+public abstract class Pessoa {
     private String nome;
     private String telefone;
 
     public Pessoa(String nome, String telefone) {
-        this.nome = nome;
-        this.telefone = telefone;
+        setNome(nome);
+        setTelefone(telefone);
     }
 
     public String getNome() {
@@ -15,7 +15,11 @@ public abstract class Pessoa {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "O nome não pode ficar vazio.");
+        }
+        this.nome = nome.trim();
     }
 
     public String getTelefone() {
@@ -23,13 +27,17 @@ public abstract class Pessoa {
     }
 
     public void setTelefone(String telefone) {
-        this.telefone = telefone;
+        if (!Validadores.validarTelefone(telefone)) {
+            throw new IllegalArgumentException(
+                    "O telefone deve possuir 10 ou 11 dígitos, contando o DDD.");
+        }
+        this.telefone = Validadores.somenteNumeros(telefone);
     }
 
     public abstract String getTipo();
 
-    @Override
-    public String toString() {
-        return "Nome: " + nome + " | Telefone: " + telefone;
+    protected String dadosBasicos() {
+        return "Nome: " + nome + " | Telefone: "
+                + Validadores.formatarTelefone(telefone);
     }
 }
